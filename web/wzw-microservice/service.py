@@ -22,6 +22,10 @@ class Service:
     def get_requested_format(self, job_id: str) -> str:
         return self.job_controller.get_job_metadata(job_id)['format']
 
+    def order_song_classification(self, job_data):
+        return self.job_controller.enqueue_job(job_data, 'queue:wzw')
+
+
     def order_pdf_generation(self, job_data):
         return self.job_controller.enqueue_job(job_data, 'queue:wzw', metadata={'format': 'pdf'})
 

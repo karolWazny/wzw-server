@@ -1,7 +1,7 @@
 # Server for E-Xsultate Songbook Generator Service
 # Copyright (C) 2022  Karol Ważny
 import io
-
+import base64
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -68,24 +68,12 @@ async def get_job_status():
 async def schedule_async_job():
     files = await quart.request.files
     parts = await quart.request.form
-    file = io.BytesIO()
-    await files['audio'].save(file)
-    logging.info(files.keys())
-    logging.info(parts['lyrics'])
-
-    # if songbook_format == 'docx':
-    #     logging.info('enqueuing docx job')
-    #     logging.debug('job: ' + str(data))
-    #     identifier = async_generator_service.order_docx_generation(data)
-    # elif songbook_format == 'pdf':
-    #     logging.info('enqueuing pdf job')
-    #     logging.debug('job: ' + str(data))
-    #     identifier = async_generator_service.order_pdf_generation(data)
-    # else:
-    #     return quart.jsonify({
-    #         'message': "Requested songbook format: {0} is not supported.\n"
-    #                    "Supported formats are: pdf, docx.".format(songbook_format)
-    #     }), 400
+    file = io.BytesIO(files['audio'].read())
+    audio_encoded = str(base64.b64encode(file.read()))
+    identifier = async_generator_service.order_song_classification({
+        'lyrics': parts['lyrics'],
+        'audio': audio_encoded
+    })
     return quart.jsonify({
-        'identifier': '123qwe'
+        'identifier': identifier
     }), 201
