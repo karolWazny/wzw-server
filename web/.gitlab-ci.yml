@@ -1,0 +1,25 @@
+variables:
+  CONTAINER_NAME: songbook-server
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+
+image: docker:18.09.7
+services:
+  - docker:18.09.7-dind
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - deploy
+
+app_build_image:
+  stage: deploy
+  only:
+    refs:
+      - tags
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  retry:
+    max: 2
+

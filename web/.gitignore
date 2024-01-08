@@ -1,0 +1,5 @@
+.idea/
+wzw-microservice/__pycache__/
+wzw-microservice/utils/__pycache__/
+wzw-microservice/utils/songbook_generator/__pycache__/
+venv
