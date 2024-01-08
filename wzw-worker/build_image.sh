@@ -1,0 +1,1 @@
+docker build -t 252716/wzw-worker:1.0.0 .
