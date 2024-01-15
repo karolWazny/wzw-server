@@ -16,8 +16,21 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Service:
-    def __init__(self, job_controller):
+    def __init__(self, job_controller, assets_dir):
         self.job_controller = job_controller
+        self.assets_dir = assets_dir
+
+    def get_initial_lyrics_features(self):
+        with open(self.assets_dir + "/text_umap_reduced_features.json") as f:
+            return f.read()
+
+    def get_initial_audio_features(self):
+        with open(self.assets_dir + "/audio_umap_reduced_features.json") as f:
+            return f.read()
+
+    def get_initial_lyrics_emotions(self):
+        with open(self.assets_dir + "/lyrics_emotions.json") as f:
+            return f.read()
 
     def get_requested_format(self, job_id: str) -> str:
         return self.job_controller.get_job_metadata(job_id)['format']

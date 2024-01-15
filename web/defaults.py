@@ -19,3 +19,4 @@ REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 LOGGING_LEVEL = "DEBUG"
 ALLOWED_ORIGIN = "http://localhost"
+ASSETS_DIR = './assets'

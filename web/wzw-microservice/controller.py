@@ -77,3 +77,18 @@ async def schedule_async_job():
     return quart.jsonify({
         'identifier': identifier
     }), 201
+
+
+@application.route('/api/v1/wzw/initial-data/lyrics-features', methods=['GET'])
+def get_lyrics_features():
+    return async_generator_service.get_initial_lyrics_features()
+
+
+@application.route('/api/v1/wzw/initial-data/audio-features', methods=['GET'])
+def get_audio_features():
+    return async_generator_service.get_initial_audio_features()
+
+
+@application.route('/api/v1/wzw/initial-data/lyrics-emotions', methods=['GET'])
+def get_lyrics_emotions():
+    return async_generator_service.get_initial_lyrics_emotions()

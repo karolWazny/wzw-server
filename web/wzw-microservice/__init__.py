@@ -29,7 +29,9 @@ redis_host = os.getenv('REDIS_HOST', defaults.REDIS_HOST)
 redis_port = os.getenv('REDIS_PORT', defaults.REDIS_PORT)
 
 jobs_manager = JobManager(redis_host, redis_port)
-controller.async_generator_service = service.Service(jobs_manager)
+
+assets_dir = os.getenv('ASSETS_DIR', defaults.ASSETS_DIR)
+controller.async_generator_service = service.Service(jobs_manager, assets_dir)
 
 level = os.getenv("LOGGING_LEVEL", defaults.LOGGING_LEVEL)
 level = logging.getLevelName(level)
